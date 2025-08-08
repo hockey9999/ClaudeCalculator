@@ -1,0 +1,422 @@
+:root {
+    --bg-gradient-start: #667eea;
+    --bg-gradient-end: #764ba2;
+    --calculator-bg: #333;
+    --calculator-shadow: rgba(0, 0, 0, 0.3);
+    --display-bg: #000;
+    --display-text: white;
+    --number-bg: #666;
+    --number-bg-hover: #777;
+    --number-text: white;
+    --operator-bg: #ff9500;
+    --operator-bg-hover: #ffad33;
+    --operator-text: white;
+    --clear-bg: #a6a6a6;
+    --clear-bg-hover: #b8b8b8;
+    --clear-text: black;
+    --advanced-bg: #9b59b6;
+    --advanced-bg-hover: #8e44ad;
+    --advanced-text: white;
+    --theme-btn-bg: rgba(255, 255, 255, 0.2);
+    --theme-btn-text: white;
+}
+
+[data-theme="light"] {
+    --bg-gradient-start: #74b9ff;
+    --bg-gradient-end: #0984e3;
+    --calculator-bg: #fff;
+    --calculator-shadow: rgba(0, 0, 0, 0.1);
+    --display-bg: #f8f9fa;
+    --display-text: #2d3436;
+    --number-bg: #e9ecef;
+    --number-bg-hover: #dee2e6;
+    --number-text: #2d3436;
+    --operator-bg: #0984e3;
+    --operator-bg-hover: #74b9ff;
+    --operator-text: white;
+    --clear-bg: #fd79a8;
+    --clear-bg-hover: #e84393;
+    --clear-text: white;
+    --advanced-bg: #6c5ce7;
+    --advanced-bg-hover: #5f3dc4;
+    --advanced-text: white;
+    --theme-btn-bg: rgba(0, 0, 0, 0.1);
+    --theme-btn-text: #2d3436;
+}
+
+[data-theme="neon"] {
+    --bg-gradient-start: #1a1a2e;
+    --bg-gradient-end: #16213e;
+    --calculator-bg: #0f0f0f;
+    --calculator-shadow: 0 0 20px #00ffff;
+    --display-bg: #000;
+    --display-text: #00ffff;
+    --number-bg: #2d2d2d;
+    --number-bg-hover: #3d3d3d;
+    --number-text: #00ffff;
+    --operator-bg: #ff0080;
+    --operator-bg-hover: #ff3399;
+    --operator-text: white;
+    --clear-bg: #ff6b35;
+    --clear-bg-hover: #ff8c42;
+    --clear-text: white;
+    --advanced-bg: #9013fe;
+    --advanced-bg-hover: #7209b7;
+    --advanced-text: white;
+    --theme-btn-bg: rgba(0, 255, 255, 0.2);
+    --theme-btn-text: #00ffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Mobile optimizations */
+html, body {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overscroll-behavior: none;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+#theme-toggle, #sound-toggle {
+    background: var(--theme-btn-bg);
+    color: var(--theme-btn-text);
+    border: 2px solid var(--theme-btn-text);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+#theme-toggle:hover {
+    transform: rotate(180deg) scale(1.1);
+    box-shadow: 0 0 15px var(--theme-btn-text);
+}
+
+#sound-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--theme-btn-text);
+}
+
+#sound-toggle:active {
+    transform: scale(0.9);
+}
+
+.calculator {
+    background: var(--calculator-bg);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px var(--calculator-shadow);
+    width: 350px;
+    transition: all 0.3s ease;
+}
+
+.display {
+    margin-bottom: 15px;
+}
+
+#display {
+    width: 100%;
+    height: 60px;
+    background: var(--display-bg);
+    color: var(--display-text);
+    font-size: 24px;
+    text-align: right;
+    padding: 0 15px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: none;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.btn {
+    height: 60px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.05s ease-out;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    min-height: 44px; /* iOS accessibility minimum */
+}
+
+.btn:hover {
+    transform: scale(0.95);
+}
+
+.btn:active {
+    transform: scale(0.9);
+}
+
+.number {
+    background: var(--number-bg);
+    color: var(--number-text);
+    transition: background-color 0.1s ease;
+}
+
+.operator {
+    background: var(--operator-bg);
+    color: var(--operator-text);
+    transition: background-color 0.1s ease;
+}
+
+.clear {
+    background: var(--clear-bg);
+    color: var(--clear-text);
+    transition: background-color 0.1s ease;
+}
+
+.equals {
+    background: var(--operator-bg);
+    color: var(--operator-text);
+    grid-row: span 2;
+    height: 130px;
+    transition: background-color 0.1s ease;
+}
+
+.advanced {
+    background: var(--advanced-bg);
+    color: var(--advanced-text);
+    transition: background-color 0.1s ease;
+}
+
+/* Only apply hover color changes on non-touch devices */
+@media (hover: hover) {
+    .number:hover {
+        background: var(--number-bg-hover);
+    }
+    
+    .operator:hover {
+        background: var(--operator-bg-hover);
+    }
+    
+    .clear:hover {
+        background: var(--clear-bg-hover);
+    }
+    
+    .equals:hover {
+        background: var(--operator-bg-hover);
+    }
+    
+    .advanced:hover {
+        background: var(--advanced-bg-hover);
+    }
+}
+
+.zero {
+    grid-column: span 2;
+}
+
+/* Fun animations */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+/* Only apply hover effects on non-touch devices */
+@media (hover: hover) {
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        transition: all 0.15s ease;
+    }
+    
+    .equals:hover {
+        animation: pulse 1s infinite;
+    }
+    
+    .advanced:hover {
+        transform: translateY(-2px) rotate(5deg);
+    }
+}
+
+/* Disable animations on touch devices for better performance */
+@media (hover: none) {
+    .btn {
+        transition: transform 0.05s ease;
+    }
+    
+    .btn:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    .equals:hover {
+        animation: none;
+    }
+    
+    .advanced:hover {
+        transform: none;
+    }
+}
+
+/* Mobile responsive design */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+        justify-content: flex-start;
+        padding-top: 60px;
+    }
+    
+    .calculator {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .controls {
+        top: 10px;
+        right: 10px;
+    }
+    
+    #theme-toggle, #sound-toggle {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    
+    .btn {
+        height: 70px;
+        font-size: 20px;
+        min-height: 48px;
+    }
+    
+    #display {
+        height: 70px;
+        font-size: 28px;
+        padding: 0 20px;
+    }
+    
+    .buttons {
+        gap: 12px;
+    }
+    
+    .equals {
+        height: 152px;
+    }
+}
+
+@media (max-width: 360px) {
+    .calculator {
+        width: calc(100vw - 20px);
+        padding: 15px;
+    }
+    
+    .btn {
+        height: 65px;
+        font-size: 18px;
+    }
+    
+    #display {
+        height: 65px;
+        font-size: 26px;
+    }
+    
+    .equals {
+        height: 142px;
+    }
+}
+
+/* Landscape mobile optimization */
+@media (max-height: 600px) and (orientation: landscape) {
+    body {
+        padding-top: 10px;
+        align-items: flex-start;
+        justify-content: center;
+    }
+    
+    .calculator {
+        margin-top: 10px;
+    }
+    
+    .controls {
+        top: 5px;
+        right: 5px;
+    }
+    
+    .btn {
+        height: 50px;
+        font-size: 16px;
+    }
+    
+    #display {
+        height: 50px;
+        font-size: 22px;
+    }
+    
+    .equals {
+        height: 112px;
+    }
+}
+
+/* Prevent zoom on double tap */
+button, input {
+    touch-action: manipulation;
+}
+
+/* Hide native browser controls on mobile */
+@media (max-width: 768px) {
+    body {
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+    }
+}

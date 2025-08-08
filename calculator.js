@@ -45,6 +45,88 @@ function deleteLast() {
     display.value = currentInput;
 }
 
+function percentage() {
+    try {
+        if (currentInput === '') return;
+        
+        let result = parseFloat(currentInput) / 100;
+        display.value = result;
+        currentInput = result.toString();
+        shouldResetDisplay = true;
+    } catch (error) {
+        display.value = 'Error';
+        currentInput = '';
+        shouldResetDisplay = true;
+    }
+}
+
+function toggleSign() {
+    if (currentInput === '' || currentInput === '0') return;
+    
+    if (currentInput.startsWith('-')) {
+        currentInput = currentInput.substring(1);
+    } else {
+        currentInput = '-' + currentInput;
+    }
+    display.value = currentInput;
+}
+
+function squareRoot() {
+    try {
+        if (currentInput === '') return;
+        
+        let value = parseFloat(currentInput);
+        if (value < 0) {
+            throw new Error('Cannot take square root of negative number');
+        }
+        
+        let result = Math.sqrt(value);
+        display.value = result;
+        currentInput = result.toString();
+        shouldResetDisplay = true;
+    } catch (error) {
+        display.value = 'Error';
+        currentInput = '';
+        shouldResetDisplay = true;
+    }
+}
+
+function square() {
+    try {
+        if (currentInput === '') return;
+        
+        let value = parseFloat(currentInput);
+        let result = value * value;
+        
+        display.value = result;
+        currentInput = result.toString();
+        shouldResetDisplay = true;
+    } catch (error) {
+        display.value = 'Error';
+        currentInput = '';
+        shouldResetDisplay = true;
+    }
+}
+
+function reciprocal() {
+    try {
+        if (currentInput === '' || currentInput === '0') {
+            throw new Error('Cannot divide by zero');
+        }
+        
+        let value = parseFloat(currentInput);
+        let result = 1 / value;
+        
+        display.value = result;
+        currentInput = result.toString();
+        shouldResetDisplay = true;
+    } catch (error) {
+        display.value = 'Error';
+        currentInput = '';
+        shouldResetDisplay = true;
+    }
+}
+
 function calculate() {
     try {
         if (currentInput === '') return;
@@ -85,5 +167,16 @@ document.addEventListener('keydown', function(event) {
         clearDisplay();
     } else if (key === 'Backspace') {
         deleteLast();
+    } else if (key === '%') {
+        event.preventDefault();
+        percentage();
+    } else if (key === 's' || key === 'S') {
+        squareRoot();
+    } else if (key === 'q' || key === 'Q') {
+        square();
+    } else if (key === 'r' || key === 'R') {
+        reciprocal();
+    } else if (key === 'n' || key === 'N') {
+        toggleSign();
     }
 });

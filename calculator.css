@@ -14,6 +14,9 @@
     --clear-bg: #a6a6a6;
     --clear-bg-hover: #b8b8b8;
     --clear-text: black;
+    --advanced-bg: #9b59b6;
+    --advanced-bg-hover: #8e44ad;
+    --advanced-text: white;
     --theme-btn-bg: rgba(255, 255, 255, 0.2);
     --theme-btn-text: white;
 }
@@ -34,6 +37,9 @@
     --clear-bg: #fd79a8;
     --clear-bg-hover: #e84393;
     --clear-text: white;
+    --advanced-bg: #6c5ce7;
+    --advanced-bg-hover: #5f3dc4;
+    --advanced-text: white;
     --theme-btn-bg: rgba(0, 0, 0, 0.1);
     --theme-btn-text: #2d3436;
 }
@@ -54,6 +60,9 @@
     --clear-bg: #ff6b35;
     --clear-bg-hover: #ff8c42;
     --clear-text: white;
+    --advanced-bg: #9013fe;
+    --advanced-bg-hover: #7209b7;
+    --advanced-text: white;
     --theme-btn-bg: rgba(0, 255, 255, 0.2);
     --theme-btn-text: #00ffff;
 }
@@ -104,7 +113,7 @@ body {
     border-radius: 20px;
     padding: 20px;
     box-shadow: 0 10px 30px var(--calculator-shadow);
-    width: 300px;
+    width: 350px;
     transition: all 0.3s ease;
 }
 
@@ -190,6 +199,16 @@ body {
 
 .equals:hover {
     background: var(--operator-bg-hover);
+}
+
+.advanced {
+    background: var(--advanced-bg);
+    color: var(--advanced-text);
+    transition: all 0.3s ease;
+}
+
+.advanced:hover {
+    background: var(--advanced-bg-hover);
 }
 
 .zero {

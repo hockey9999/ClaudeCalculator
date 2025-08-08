@@ -47,21 +47,25 @@ function playSound(frequency = 440, duration = 100, type = 'number') {
 }
 
 function addButtonAnimation(button) {
+    // Faster animation for better mobile performance
     button.style.transform = 'scale(0.95)';
     setTimeout(() => {
         button.style.transform = 'scale(1)';
-    }, 150);
+    }, 50);
 }
 
 function createParticles() {
+    // Reduce particle count on mobile for better performance
+    const isMobile = window.innerWidth <= 768;
+    const particleCount = isMobile ? 5 : 10;
     const calculator = document.querySelector('.calculator');
     const particles = [];
     
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.style.position = 'absolute';
-        particle.style.width = '4px';
-        particle.style.height = '4px';
+        particle.style.width = '3px';
+        particle.style.height = '3px';
         particle.style.backgroundColor = 'var(--operator-bg)';
         particle.style.borderRadius = '50%';
         particle.style.pointerEvents = 'none';
@@ -74,10 +78,10 @@ function createParticles() {
         document.body.appendChild(particle);
         particles.push(particle);
         
-        // Animate particle
-        const angle = (i / 10) * Math.PI * 2;
-        const velocity = 50 + Math.random() * 50;
-        const lifetime = 1000 + Math.random() * 500;
+        // Animate particle with shorter duration on mobile
+        const angle = (i / particleCount) * Math.PI * 2;
+        const velocity = isMobile ? 30 + Math.random() * 30 : 50 + Math.random() * 50;
+        const lifetime = isMobile ? 400 + Math.random() * 200 : 800 + Math.random() * 400;
         
         particle.animate([
             { transform: 'translate(0, 0) scale(1)', opacity: 1 },
@@ -89,7 +93,9 @@ function createParticles() {
             duration: lifetime,
             easing: 'ease-out'
         }).onfinish = () => {
-            document.body.removeChild(particle);
+            if (document.body.contains(particle)) {
+                document.body.removeChild(particle);
+            }
         };
     }
 }
@@ -168,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('touchend', function() {
             setTimeout(() => {
                 this.style.transform = '';
-            }, 150);
+            }, 50);
         });
     });
     
@@ -178,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.transform = 'scale(0.9)';
             setTimeout(() => {
                 this.style.transform = '';
-            }, 150);
+            }, 50);
         });
     });
     

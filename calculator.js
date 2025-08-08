@@ -47,11 +47,12 @@ function playSound(frequency = 440, duration = 100, type = 'number') {
 }
 
 function addButtonAnimation(button) {
-    // Faster animation for better mobile performance
+    // Use CSS animation instead of setTimeout to avoid blocking
     button.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-        button.style.transform = 'scale(1)';
-    }, 50);
+    // Let CSS transition handle the return to normal scale
+    requestAnimationFrame(() => {
+        button.style.transform = '';
+    });
 }
 
 function createParticles() {
@@ -143,16 +144,6 @@ function cycleTheme() {
 document.addEventListener('DOMContentLoaded', function() {
     initializeTheme();
     
-    // Prevent zoom on iOS double tap
-    let lastTouchEnd = 0;
-    document.addEventListener('touchend', function (event) {
-        const now = (new Date()).getTime();
-        if (now - lastTouchEnd <= 300) {
-            event.preventDefault();
-        }
-        lastTouchEnd = now;
-    }, false);
-    
     // Handle audio context on mobile (requires user interaction)
     document.addEventListener('touchstart', function() {
         if (audioContext.state === 'suspended') {
@@ -160,31 +151,35 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, { once: true });
     
-    // Add click animations to all buttons
+    // Add click animations to all buttons - simplified approach
     document.querySelectorAll('.btn').forEach(button => {
-        button.addEventListener('click', function() {
+        // Use a single click event that works for both mouse and touch
+        button.addEventListener('click', function(e) {
+            // Ensure the event isn't prevented
+            e.stopPropagation();
             addButtonAnimation(this);
         });
         
-        // Add touch feedback for better mobile experience
-        button.addEventListener('touchstart', function() {
+        // Only add visual feedback, don't interfere with click events
+        button.addEventListener('touchstart', function(e) {
             this.style.transform = 'scale(0.95)';
-        });
+        }, { passive: true });
         
-        button.addEventListener('touchend', function() {
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 50);
-        });
+        button.addEventListener('touchend', function(e) {
+            // Remove transform immediately, don't wait
+            this.style.transform = '';
+        }, { passive: true });
+        
+        button.addEventListener('touchcancel', function(e) {
+            // Reset transform if touch is cancelled
+            this.style.transform = '';
+        }, { passive: true });
     });
     
     // Add click animation to control buttons
     document.querySelectorAll('#theme-toggle, #sound-toggle').forEach(button => {
         button.addEventListener('click', function() {
-            this.style.transform = 'scale(0.9)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 50);
+            addButtonAnimation(this);
         });
     });
     

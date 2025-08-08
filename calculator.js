@@ -137,23 +137,38 @@ function cycleTheme() {
 document.addEventListener('DOMContentLoaded', function() {
     initializeTheme();
     
+    // Prevent zoom on iOS double tap
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+    
+    // Handle audio context on mobile (requires user interaction)
+    document.addEventListener('touchstart', function() {
+        if (audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
+    }, { once: true });
+    
     // Add click animations to all buttons
     document.querySelectorAll('.btn').forEach(button => {
         button.addEventListener('click', function() {
             addButtonAnimation(this);
-            
-            // Add different sound based on button type
-            if (this.classList.contains('number')) {
-                // Numbers already handled in appendToDisplay
-            } else if (this.classList.contains('operator')) {
-                // Operators already handled in appendToDisplay or calculate
-            } else if (this.classList.contains('clear')) {
-                // Clear already handled in clearDisplay
-            } else if (this.classList.contains('advanced')) {
-                // Advanced functions already handled in their respective functions
-            } else if (this.classList.contains('equals')) {
-                // Equals already handled in calculate
-            }
+        });
+        
+        // Add touch feedback for better mobile experience
+        button.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.95)';
+        });
+        
+        button.addEventListener('touchend', function() {
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
         });
     });
     
@@ -165,6 +180,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.style.transform = '';
             }, 150);
         });
+    });
+    
+    // Prevent context menu on long press
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
     });
 });
 

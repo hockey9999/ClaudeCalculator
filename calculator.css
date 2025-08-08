@@ -73,6 +73,18 @@
     box-sizing: border-box;
 }
 
+/* Mobile optimizations */
+html, body {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overscroll-behavior: none;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
@@ -144,6 +156,10 @@ body {
     border-radius: 10px;
     outline: none;
     transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: none;
 }
 
 .buttons {
@@ -160,6 +176,11 @@ body {
     font-weight: bold;
     cursor: pointer;
     transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    min-height: 44px; /* iOS accessibility minimum */
 }
 
 .btn:hover {
@@ -269,4 +290,116 @@ body {
 
 .advanced:hover {
     transform: translateY(-2px) rotate(5deg);
+}
+
+/* Mobile responsive design */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+        justify-content: flex-start;
+        padding-top: 60px;
+    }
+    
+    .calculator {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .controls {
+        top: 10px;
+        right: 10px;
+    }
+    
+    #theme-toggle, #sound-toggle {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    
+    .btn {
+        height: 70px;
+        font-size: 20px;
+        min-height: 48px;
+    }
+    
+    #display {
+        height: 70px;
+        font-size: 28px;
+        padding: 0 20px;
+    }
+    
+    .buttons {
+        gap: 12px;
+    }
+    
+    .equals {
+        height: 152px;
+    }
+}
+
+@media (max-width: 360px) {
+    .calculator {
+        width: calc(100vw - 20px);
+        padding: 15px;
+    }
+    
+    .btn {
+        height: 65px;
+        font-size: 18px;
+    }
+    
+    #display {
+        height: 65px;
+        font-size: 26px;
+    }
+    
+    .equals {
+        height: 142px;
+    }
+}
+
+/* Landscape mobile optimization */
+@media (max-height: 600px) and (orientation: landscape) {
+    body {
+        padding-top: 10px;
+        align-items: flex-start;
+        justify-content: center;
+    }
+    
+    .calculator {
+        margin-top: 10px;
+    }
+    
+    .controls {
+        top: 5px;
+        right: 5px;
+    }
+    
+    .btn {
+        height: 50px;
+        font-size: 16px;
+    }
+    
+    #display {
+        height: 50px;
+        font-size: 22px;
+    }
+    
+    .equals {
+        height: 112px;
+    }
+}
+
+/* Prevent zoom on double tap */
+button, input {
+    touch-action: manipulation;
+}
+
+/* Hide native browser controls on mobile */
+@media (max-width: 768px) {
+    body {
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+    }
 }

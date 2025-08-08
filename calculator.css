@@ -1,3 +1,63 @@
+:root {
+    --bg-gradient-start: #667eea;
+    --bg-gradient-end: #764ba2;
+    --calculator-bg: #333;
+    --calculator-shadow: rgba(0, 0, 0, 0.3);
+    --display-bg: #000;
+    --display-text: white;
+    --number-bg: #666;
+    --number-bg-hover: #777;
+    --number-text: white;
+    --operator-bg: #ff9500;
+    --operator-bg-hover: #ffad33;
+    --operator-text: white;
+    --clear-bg: #a6a6a6;
+    --clear-bg-hover: #b8b8b8;
+    --clear-text: black;
+    --theme-btn-bg: rgba(255, 255, 255, 0.2);
+    --theme-btn-text: white;
+}
+
+[data-theme="light"] {
+    --bg-gradient-start: #74b9ff;
+    --bg-gradient-end: #0984e3;
+    --calculator-bg: #fff;
+    --calculator-shadow: rgba(0, 0, 0, 0.1);
+    --display-bg: #f8f9fa;
+    --display-text: #2d3436;
+    --number-bg: #e9ecef;
+    --number-bg-hover: #dee2e6;
+    --number-text: #2d3436;
+    --operator-bg: #0984e3;
+    --operator-bg-hover: #74b9ff;
+    --operator-text: white;
+    --clear-bg: #fd79a8;
+    --clear-bg-hover: #e84393;
+    --clear-text: white;
+    --theme-btn-bg: rgba(0, 0, 0, 0.1);
+    --theme-btn-text: #2d3436;
+}
+
+[data-theme="neon"] {
+    --bg-gradient-start: #1a1a2e;
+    --bg-gradient-end: #16213e;
+    --calculator-bg: #0f0f0f;
+    --calculator-shadow: 0 0 20px #00ffff;
+    --display-bg: #000;
+    --display-text: #00ffff;
+    --number-bg: #2d2d2d;
+    --number-bg-hover: #3d3d3d;
+    --number-text: #00ffff;
+    --operator-bg: #ff0080;
+    --operator-bg-hover: #ff3399;
+    --operator-text: white;
+    --clear-bg: #ff6b35;
+    --clear-bg-hover: #ff8c42;
+    --clear-text: white;
+    --theme-btn-bg: rgba(0, 255, 255, 0.2);
+    --theme-btn-text: #00ffff;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,19 +66,46 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    transition: all 0.3s ease;
+}
+
+.theme-selector {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#theme-toggle {
+    background: var(--theme-btn-bg);
+    color: var(--theme-btn-text);
+    border: 2px solid var(--theme-btn-text);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+#theme-toggle:hover {
+    transform: rotate(180deg) scale(1.1);
+    box-shadow: 0 0 15px var(--theme-btn-text);
 }
 
 .calculator {
-    background: #333;
+    background: var(--calculator-bg);
     border-radius: 20px;
     padding: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px var(--calculator-shadow);
     width: 300px;
+    transition: all 0.3s ease;
 }
 
 .display {
@@ -28,14 +115,15 @@ body {
 #display {
     width: 100%;
     height: 60px;
-    background: #000;
-    color: white;
+    background: var(--display-bg);
+    color: var(--display-text);
     font-size: 24px;
     text-align: right;
     padding: 0 15px;
     border: none;
     border-radius: 10px;
     outline: none;
+    transition: all 0.3s ease;
 }
 
 .buttons {
@@ -63,41 +151,45 @@ body {
 }
 
 .number {
-    background: #666;
-    color: white;
+    background: var(--number-bg);
+    color: var(--number-text);
+    transition: all 0.3s ease;
 }
 
 .number:hover {
-    background: #777;
+    background: var(--number-bg-hover);
 }
 
 .operator {
-    background: #ff9500;
-    color: white;
+    background: var(--operator-bg);
+    color: var(--operator-text);
+    transition: all 0.3s ease;
 }
 
 .operator:hover {
-    background: #ffad33;
+    background: var(--operator-bg-hover);
 }
 
 .clear {
-    background: #a6a6a6;
-    color: black;
+    background: var(--clear-bg);
+    color: var(--clear-text);
+    transition: all 0.3s ease;
 }
 
 .clear:hover {
-    background: #b8b8b8;
+    background: var(--clear-bg-hover);
 }
 
 .equals {
-    background: #ff9500;
-    color: white;
+    background: var(--operator-bg);
+    color: var(--operator-text);
     grid-row: span 2;
     height: 130px;
+    transition: all 0.3s ease;
 }
 
 .equals:hover {
-    background: #ffad33;
+    background: var(--operator-bg-hover);
 }
 
 .zero {

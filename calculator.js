@@ -2,6 +2,29 @@ let display = document.getElementById('display');
 let currentInput = '';
 let shouldResetDisplay = false;
 
+const themes = ['dark', 'light', 'neon'];
+let currentThemeIndex = 0;
+
+function initializeTheme() {
+    const savedTheme = localStorage.getItem('calculatorTheme');
+    if (savedTheme && themes.includes(savedTheme)) {
+        currentThemeIndex = themes.indexOf(savedTheme);
+    }
+    applyTheme(themes[currentThemeIndex]);
+}
+
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('calculatorTheme', theme);
+}
+
+function cycleTheme() {
+    currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+    applyTheme(themes[currentThemeIndex]);
+}
+
+document.addEventListener('DOMContentLoaded', initializeTheme);
+
 function appendToDisplay(value) {
     if (shouldResetDisplay) {
         currentInput = '';

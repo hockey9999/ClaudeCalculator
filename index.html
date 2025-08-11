@@ -17,13 +17,13 @@
         </div>
         <div class="buttons">
             <button class="btn clear" onclick="clearDisplay()">C</button>
-            <button class="btn advanced" onclick="toggleSign()">+/-</button>
+            <button class="btn operator" onclick="deleteLast()">⌫</button>
             <button class="btn advanced" onclick="percentage()">%</button>
             <button class="btn operator" onclick="appendToDisplay('/')">/</button>
             
+            <button class="btn advanced" onclick="toggleSign()">+/-</button>
             <button class="btn advanced" onclick="squareRoot()">√</button>
             <button class="btn advanced" onclick="square()">x²</button>
-            <button class="btn advanced" onclick="reciprocal()">1/x</button>
             <button class="btn operator" onclick="appendToDisplay('*')">×</button>
             
             <button class="btn number" onclick="appendToDisplay('7')">7</button>
@@ -43,7 +43,7 @@
             
             <button class="btn number zero" onclick="appendToDisplay('0')">0</button>
             <button class="btn number" onclick="appendToDisplay('.')">.</button>
-            <button class="btn operator" onclick="deleteLast()">⌫</button>
+            <button class="btn advanced" onclick="reciprocal()">1/x</button>
         </div>
     </div>
     <script src="src/js/calculator.js"></script>
